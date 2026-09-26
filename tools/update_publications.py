@@ -191,7 +191,27 @@ def crossref_lookup(entry, cache):
     return result
 
 
+def year_from_doi(doi, cache):
+    """Exact lookup: the publication year Crossref records for this DOI."""
+    key = f"doi-year|{doi.lower()}"
+    if cache.get(key):
+        return cache[key]
+    try:
+        time.sleep(1)
+        msg = fetch_json(f"https://api.crossref.org/works/{urllib.parse.quote(doi)}")["message"]
+        parts = (msg.get("published-print") or msg.get("published-online") or msg.get("issued") or {}).get("date-parts")
+        year = parts[0][0] if parts and parts[0] and parts[0][0] else None
+    except Exception as e:
+        print(f"  crossref DOI lookup failed for {doi}: {e}", file=sys.stderr)
+        return None
+    if year:
+        cache[key] = year
+    return year
+
+
 def fmt_authors(a):
+    a = re.sub(r"[*#\u2020]+", "", a)  # drop CV markers: * trainee, # undergraduate, \u2020 equal contribution
+    a = re.sub(r"\s+,", ",", a)
     a = html.escape(a)
     a = ME_RE.sub(lambda m: f'<span class="me">{m.group(0)}</span>', a)
     return a
@@ -200,7 +220,7 @@ def fmt_authors(a):
 def render_entry(e, kind):
     links = []
     if e["doi"]:
-        links.append(f'<li><a href="https://doi.org/{html.escape(e["doi"])}">DOI<span class="visually-hidden">: {html.escape(e["title"])}</span></a></li>')
+        links.append(f'<li><a href="https://doi.org/{html.escape(e["doi"])}">Link to paper<span class="visually-hidden">: {html.escape(e["title"])}</span></a></li>')
     if e["preprint"]:
         links.append(f'<li><a href="{html.escape(e["preprint"])}">Preprint<span class="visually-hidden">: {html.escape(e["title"])}</span></a></li>')
     links_html = f'\n                <ul class="pub-links">{"".join(links)}</ul>' if links else ""
@@ -213,7 +233,7 @@ def render_entry(e, kind):
     return f"""              <li class="pub">
                 <p class="pub-authors">{fmt_authors(e["authors"])}</p>
                 <p class="pub-title">{html.escape(e["title"])}</p>
-                <p class="pub-venue">{venue}{". " if venue else ""}{when}.</p>{links_html}
+                <p class="pub-venue">{". ".join(x for x in (venue, when) if x)}.</p>{links_html}
               </li>"""
 
 
@@ -232,6 +252,10 @@ def build(cv_path):
                     e["doi"] = e["doi"] or hit["doi"]
                     if not e["status"]:
                         e["year"] = e["year"] or hit["year"]
+            if key == "articles" and e["doi"] and not e["year"] and not e["status"]:
+                e["year"] = year_from_doi(e["doi"], cache)
+                if e["year"]:
+                    print(f"  [{e['num']}] no year in CV; using {e['year']} from its DOI (consider adding it to the CV)")
         data[key] = entries
     CACHE.write_text(json.dumps(cache, indent=1, sort_keys=True))
 

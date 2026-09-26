@@ -927,3 +927,8 @@ address { font-style: normal; }
   transform: translateX(-50%);
   filter: drop-shadow(0 2px 8px rgba(0, 40, 80, 0.35));
 }
+
+/* Collaborator cards: name links to the faculty page */
+.collab-card h4 a { color: var(--color-text); text-decoration: none; }
+.collab-card h4 a:hover { color: var(--color-primary); text-decoration: underline; }
+.collab-card h4 a::after { content: " \2197"; font-size: 0.8em; color: var(--color-primary); }

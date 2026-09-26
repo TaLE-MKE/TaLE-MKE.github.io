@@ -48,7 +48,8 @@
   if (year) year.textContent = String(new Date().getFullYear());
 
   /* ---------- Forms (front end only) ----------
-     Applies to every <form class="js-form"> (currently the Contact form).
+     Applies to every <form class="js-form">. No page uses one right now (Contact uses an
+     email button); kept so a form can be added later without new JavaScript.
      ======================================================================
      WIRE IN A FORM HANDLER HERE
      This site has no backend. To receive submissions, sign up for a form

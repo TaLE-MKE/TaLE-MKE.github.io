@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add people's photos to the People page.
+"""Add people's photos to the People page (alumni and collaborators).
 
 1. Put photos in photos-inbox/ (not published; it's in .gitignore), named after the
    person exactly as on the People page, e.g. "Kelly Barry.jpg". Accents are optional
@@ -59,9 +59,10 @@ def square_crop(im):
     return im.crop((left, top, left + side, top + side)).resize((out, out), Image.LANCZOS)
 
 
+# Alumni and collaborator cards. A collaborator's name is wrapped in a link to their faculty page.
 ALUM_RE = re.compile(
-    r'(<article class="alum">\s*)(<span class="avatar"[^>]*>[^<]*</span>|<img class="avatar avatar-photo"[^>]*>)'
-    r'(\s*<div>\s*<h4>)([^<]+)(</h4>)')
+    r'(<article class="alum[^"]*">\s*)(<span class="avatar"[^>]*>[^<]*</span>|<img class="avatar avatar-photo"[^>]*>)'
+    r'(\s*<div>\s*<h4>(?:<a [^>]*>)?)([^<]+)((?:<span class="visually-hidden">[^<]*</span>)?(?:</a>)?</h4>)')
 
 
 def main():
