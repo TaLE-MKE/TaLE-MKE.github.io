@@ -6,7 +6,7 @@
    ("Isabella Kahhale.jpg" matches "Isabella Kahhalé"). JPG, PNG, WebP, and HEIC work.
 2. Run from the site root:   python3 tools/add_people_photos.py
 3. Each photo is square-cropped (centered, biased toward the top where faces usually
-   are), resized to 320x320, saved as assets/img/people/<name>.webp with all metadata
+   are), resized to 320x320 (smaller photos keep their size), saved as assets/img/people/<name>.webp with all metadata
    (EXIF, GPS) dropped, and swapped into that person's card in place of the initials.
 
 Rerunning is safe: a newer photo replaces the old one. People without a photo keep
@@ -55,7 +55,8 @@ def square_crop(im):
     side = min(w, h)
     left = (w - side) // 2
     top = int((h - side) * 0.2)  # portraits: keep the head, trim more from the bottom
-    return im.crop((left, top, left + side, top + side)).resize((SIZE, SIZE), Image.LANCZOS)
+    out = min(SIZE, side)  # never upscale small photos; 200px is plenty for a 64px circle
+    return im.crop((left, top, left + side, top + side)).resize((out, out), Image.LANCZOS)
 
 
 ALUM_RE = re.compile(

@@ -711,7 +711,11 @@ address { font-style: normal; }
   letter-spacing: 0.03em;
 }
 .alum:nth-child(even) .avatar { background: var(--color-secondary); }
-.avatar-photo { object-fit: cover; background: var(--color-primary-soft); }
+.avatar-photo {
+  object-fit: cover;
+  background: var(--color-primary-soft);
+  box-shadow: 0 0 0 3px var(--color-primary-soft);  /* keeps white-background photos from blending into the card */
+}
 .alum h4 { font-size: 1.1rem; margin: 2px 0 4px; }
 .alum p { margin: 0; font-size: 0.95rem; }
 .alum-role { color: var(--color-text-muted); }
