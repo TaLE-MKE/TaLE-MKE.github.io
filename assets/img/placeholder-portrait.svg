@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
   <!-- PLACEHOLDER: replace with a real headshot (square, at least 600x600 px). -->
-  <rect width="400" height="400" fill="#e3f1ee"/>
-  <circle cx="200" cy="160" r="70" fill="#b9d8d2"/>
-  <path d="M70 400c0-80 58-130 130-130s130 50 130 130z" fill="#b9d8d2"/>
-  <text x="200" y="376" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#00594f">Photo placeholder</text>
+  <rect width="400" height="400" fill="#e8f2fb"/>
+  <circle cx="200" cy="160" r="70" fill="#c1ddf4"/>
+  <path d="M70 400c0-80 58-130 130-130s130 50 130 130z" fill="#c1ddf4"/>
+  <text x="200" y="376" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#005a9c">Photo placeholder</text>
 </svg>

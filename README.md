@@ -15,7 +15,9 @@ news.html           3 dated news entries
 contact.html        Contact info, contact form, open positions
 css/styles.css      All styles; brand colors at the top in :root
 js/main.js          Mobile nav, footer year, contact form validation
-assets/img/         logo-mark.svg, placeholder-portrait.svg, placeholder-landscape.svg
+assets/img/         logo-horizontal.webp (header), logo-square.webp (footer),
+                    logo-mark.svg (favicon), photo placeholders
+assets/img/brand/   Full-resolution logo PNGs (print, slides, social)
 tests/check_site.py Static checks (links, alt text, nav, labels, contrast)
 ```
 
@@ -59,9 +61,6 @@ Visible placeholder text is in `[square brackets]`.
 
 | What | Where |
 |---|---|
-| Primary color `[PRIMARY HEX]` (now `#00594f`) | `css/styles.css` `--color-primary`, plus `--color-primary-dark` and `--color-primary-soft` |
-| Secondary color `[SECONDARY HEX]` (now `#0067b9`) | `css/styles.css` `--color-secondary`, `--color-secondary-dark`, `--color-secondary-soft` |
-| Colors baked into the SVGs | `assets/img/*.svg` (they use the same hex values; update if you change brand colors) |
 | Lab email (`your-email@mcw.edu`) | Footer of all 6 pages, and 2 places in `contact.html` |
 | Building / address | Footer of all 6 pages, and `contact.html` |
 | One-line mission | `index.html` hero, `research.html` mission block |
@@ -77,7 +76,20 @@ Visible placeholder text is in `[square brackets]`.
 | 3 news items | `news.html`. Update both the `datetime` attribute and the visible date. |
 | Recruiting blurb and 3 open positions | `contact.html` |
 | Contact form handler | `js/main.js` `FORM_ENDPOINT`, and `action=""` on the form in `contact.html` (see below) |
-| Logo | `assets/img/logo-mark.svg` (also the favicon) |
+
+### Brand colors and logo
+
+Colors are sampled from the TaLE MKE logo and live at the top of `css/styles.css`:
+
+| Token | Hex | Used for |
+|---|---|---|
+| `--color-primary` | `#0074c8` | Logo blue: header, home hero, footer, buttons, links |
+| `--color-primary-dark` | `#005a9c` | Hover states; blue text on pale-blue surfaces |
+| `--color-secondary` | `#007065` | Logo green: trajectory line, focus-area accents |
+| `--color-accent-light` | `#7eb8e0` | Logo light-blue lines |
+| `--color-accent-pale` | `#c1ddf4` | Logo pale-blue lines |
+
+The header and footer background must stay exactly `#0074c8` so the logo images blend in. If the logo is ever re-exported in another color, change `--color-primary` to match. The favicon and placeholder SVGs use the same hex values. Logo blue on white is 4.85:1 (passes AA); logo blue on pale blue does not, so text on pale-blue surfaces uses `--color-primary-dark`. `tests/check_site.py` enforces this.
 
 ### Wiring the contact form
 

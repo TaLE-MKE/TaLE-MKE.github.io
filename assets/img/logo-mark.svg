@@ -1,9 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
-  <!-- PLACEHOLDER: simple wordmark icon. Replace with a designed lab logo if you have one. -->
-  <rect width="40" height="40" rx="11" fill="#00594f"/>
-  <g fill="none" stroke-linecap="round" stroke-width="2.6">
-    <path d="M8 30 C16 29 18 18 25 17 S31 11 33 9" stroke="#ffffff"/>
-    <path d="M8 33 C17 32 20 24 27 23 S31 20 33 19" stroke="#7fc3f5"/>
+  <!-- Favicon: simplified trajectory mark from the TaLE MKE logo. -->
+  <rect width="40" height="40" rx="9" fill="#0074c8"/>
+  <g fill="none" stroke-linecap="round" stroke-width="1.6">
+    <path d="M13 27 C20 25 27 14 35 10" stroke="#7eb8e0"/>
+    <path d="M13 27 C21 26 28 21 35 19" stroke="#c1ddf4"/>
   </g>
-  <circle cx="25" cy="17" r="2.6" fill="#f2b544"/>
+  <path d="M5 29 C9 29 11 28 13 27 S22 22 26 20 S31 17 35 15" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+  <path d="M5 29 C9 29 11 28 13 27 S22 22 26 20 S31 17 35 15" fill="none" stroke="#007065" stroke-width="2.6" stroke-linecap="round"/>
+  <g fill="#007065" stroke="#fff" stroke-width="1.5">
+    <circle cx="5.5" cy="29" r="3"/><circle cx="20" cy="23.5" r="3"/><circle cx="34.5" cy="15" r="3"/>
+  </g>
 </svg>

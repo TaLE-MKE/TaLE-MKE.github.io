@@ -162,20 +162,31 @@ for name in parsed:
         if inst not in footer:
             fail(f"{name}: footer is missing {inst}")
 
+# Logo in header and footer of every page.
+for name in parsed:
+    html = (ROOT / name).read_text()
+    head = html[html.find("<header"):html.find("</header>")]
+    foot = html[html.find("<footer"):]
+    if "logo-horizontal.webp" not in head:
+        fail(f"{name}: header is missing the horizontal logo")
+    if "logo-square.webp" not in foot:
+        fail(f"{name}: footer is missing the square logo")
+
 # ---- color contrast (WCAG AA 4.5:1 for normal text) ----
 css = (ROOT / "css/styles.css").read_text()
 tokens = dict(re.findall(r"--(color-[\w-]+):\s*(#[0-9a-fA-F]{6})", css))
 pairs = [
-    ("#ffffff", "color-primary", "white text on primary buttons/nav"),
-    ("#ffffff", "color-primary-dark", "footer text"),
-    ("#ffffff", "color-secondary", "secondary on white (links)"),
+    ("#ffffff", "color-primary", "white text on blue header, hero, footer, buttons"),
+    ("#ffffff", "color-primary-dark", "white text on hovered buttons"),
+    ("#ffffff", "color-secondary", "white on green"),
+    ("color-primary", "#ffffff", "blue links and current-page nav pill on white"),
+    ("color-primary-dark", "color-primary-soft", "dark blue text on pale blue (eyebrows, role pills, note links)"),
     ("color-text", "color-bg", "body text"),
     ("color-text-muted", "color-bg", "muted text"),
-    ("color-text-muted", "color-warm", "muted text on warm band"),
-    ("color-text-muted", "color-primary-soft", "muted text on tint"),
-    ("color-primary", "color-primary-soft", "role pill / eyebrow on tint"),
-    ("color-secondary-dark", "color-secondary-soft", "role pill (even cards)"),
-    ("color-secondary", "color-secondary-soft", "links in note box"),
+    ("color-text-muted", "color-band", "muted text on light band"),
+    ("color-text-muted", "color-primary-soft", "muted text on pale blue"),
+    ("color-secondary", "#ffffff", "green focus-area labels"),
+    ("color-secondary-dark", "color-secondary-soft", "green role pill"),
     ("color-error", "color-bg", "form errors"),
     ("color-success", "color-bg", "form success"),
 ]
