@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contact and Join | TaLE MKE</title>
-  <meta name="description" content="Contact TaLE MKE and see open positions for graduate students, postdocs, and research staff.">
+  <meta name="description" content="Contact TaLE MKE, and how graduate students, postdocs, and research staff can join the lab.">
   <link rel="icon" href="assets/img/logo-mark.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,6 +30,7 @@
           <li><a href="research.html">Research</a></li>
           <li><a href="team.html">People</a></li>
           <li><a href="publications.html">Publications</a></li>
+          <li><a href="participate.html">Participate</a></li>
           <li><a href="news.html">News</a></li>
           <li><a href="contact.html" aria-current="page">Join / Contact</a></li>
         </ul>
@@ -69,16 +70,14 @@
               <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>
               <div>
                 <strong>Email</strong>
-                <!-- PLACEHOLDER: lab email -->
-                <a href="mailto:your-email@mcw.edu">your-email@mcw.edu</a>
+                <a href="mailto:jamhanson@mcw.edu">jamhanson@mcw.edu</a>
               </div>
             </li>
             <li>
               <span class="card-icon alt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2"/></svg></span>
               <div>
                 <strong>Location</strong>
-                <!-- PLACEHOLDER: building and address -->
-                [Building / room]<br>[Street address]<br>Milwaukee, WI [ZIP]
+                <address>Children's Wisconsin<br>Center for Child Development<br>1250 N. 113th St., Suite 200<br>Wauwatosa, WI 53226</address>
               </div>
             </li>
             <li>
@@ -89,35 +88,37 @@
               </div>
             </li>
           </ul>
+          <p>Families interested in taking part in a study: please see <a href="participate.html">Participate</a>.</p>
         </div>
 
         <div class="card form-card">
-          <h2>Send us a message</h2>
+          <h2 id="form-title">Send us a message</h2>
           <!--
             FRONT END ONLY. This form does not send anything yet.
-            To wire it up (e.g. Formspree):
-              1. Create a form at https://formspree.io and copy its endpoint.
-              2. Put that URL in action="" below (used when JavaScript is off).
-              3. Put the same URL in FORM_ENDPOINT at the top of the form section in js/main.js.
+            To wire it up (e.g. Formspree), set FORM_ENDPOINT in js/main.js and
+            put the same URL in action="" below (used when JavaScript is off).
           -->
-          <form id="contact-form" action="" method="POST" novalidate>
+          <form class="js-form" id="contact-form" action="" method="POST" novalidate aria-labelledby="form-title">
+            <input type="hidden" name="_form" value="contact">
             <div class="field">
               <label for="name">Name</label>
-              <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-error">
+              <input id="name" name="name" type="text" autocomplete="name" required
+                     data-error="Please enter your name." aria-describedby="name-error">
               <p class="field-error" id="name-error" aria-live="polite"></p>
             </div>
             <div class="field">
               <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-error">
+              <input id="email" name="email" type="email" autocomplete="email" required
+                     data-error="Please enter a valid email address, like name@example.com." aria-describedby="email-error">
               <p class="field-error" id="email-error" aria-live="polite"></p>
             </div>
             <div class="field">
-              <label for="message">Message <span class="hint">(if you are applying, tell us which position)</span></label>
-              <textarea id="message" name="message" required aria-describedby="message-error"></textarea>
+              <label for="message">Message <span class="hint">(if you are asking about joining, tell us a little about your interests)</span></label>
+              <textarea id="message" name="message" required data-error="Please enter a message." aria-describedby="message-error"></textarea>
               <p class="field-error" id="message-error" aria-live="polite"></p>
             </div>
             <button class="btn btn-primary" type="submit">Send message</button>
-            <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+            <p class="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
       </div>
@@ -126,31 +127,27 @@
     <section class="section section-band" aria-labelledby="join-title">
       <div class="container">
         <div class="section-head">
-          <span class="eyebrow">We're recruiting</span>
+          <span class="eyebrow">Join us</span>
           <h2 id="join-title">Join TaLE MKE</h2>
-          <!-- PLACEHOLDER: recruiting blurb -->
-          <p>[Recruiting blurb: the kind of people you are looking for, what trainees gain, and the
-          lab's commitment to mentoring and an inclusive environment. Lorem ipsum dolor sit amet.]</p>
+          <p>We are building the lab in Milwaukee and welcome inquiries from people at every stage. There are no
+          specific postings right now, but we are always glad to hear from people whose interests fit ours.</p>
         </div>
         <ul class="position-list">
             <li class="position">
-              <!-- PLACEHOLDER: position details -->
               <h3>Graduate students</h3>
-              <p>[Which programs you recruit from (e.g., MCW Graduate School), start term, and how to express interest.]</p>
+              <p>Students interested in developmental science, neuroscience, and health who want to work with kids, families, and longitudinal data.</p>
             </li>
             <li class="position">
-              <!-- PLACEHOLDER: position details -->
               <h3>Postdoctoral fellows</h3>
-              <p>[Research areas, skills you are looking for, funding status, and start date.]</p>
+              <p>Researchers with interests in early experience, brain development, aging, or open and reproducible methods.</p>
             </li>
             <li class="position">
-              <!-- PLACEHOLDER: position details -->
-              <h3>Research staff</h3>
-              <p>[Open coordinator or assistant roles, with a link to the MCW job posting.]</p>
+              <h3>Research staff and students</h3>
+              <p>Research coordinators, research assistants, and undergraduate researchers in the Milwaukee area.</p>
             </li>
         </ul>
-        <p style="margin-top:28px">To apply, email a CV and a short note about your interests to
-        <a href="mailto:your-email@mcw.edu">your-email@mcw.edu</a>, or use the form above.</p>
+        <p style="margin-top:28px">To get in touch, email Jamie at <a href="mailto:jamhanson@mcw.edu">jamhanson@mcw.edu</a> with a CV
+        and a few sentences about your interests, or use the form above.</p>
       </div>
     </section>
   </main>
@@ -172,15 +169,17 @@
         </div>
         <div>
           <h2>Contact</h2>
-          <!-- PLACEHOLDER: lab email -->
-          <p><a href="mailto:your-email@mcw.edu">your-email@mcw.edu</a></p>
-          <!-- PLACEHOLDER: building -->
-          <p>[Building / room], Milwaukee, WI</p>
+          <p><a href="mailto:jamhanson@mcw.edu">jamhanson@mcw.edu</a></p>
+          <address>Children's Wisconsin<br>Center for Child Development<br>1250 N. 113th St., Suite 200<br>Wauwatosa, WI 53226</address>
         </div>
       </div>
       <div class="footer-bottom">
         <p>&copy; <span id="year">2026</span> TaLE MKE, Medical College of Wisconsin and Children's Wisconsin.</p>
-        <p><a href="contact.html">Join the lab</a></p>
+        <ul class="footer-links">
+          <li><a href="participate.html">Participate</a></li>
+          <li><a href="funding.html">Funding</a></li>
+          <li><a href="contact.html">Join the lab</a></li>
+        </ul>
       </div>
     </div>
   </footer>

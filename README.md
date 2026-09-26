@@ -7,18 +7,22 @@ Plain HTML, CSS, and a small vanilla JS file. No framework, no build step. The o
 ## Files
 
 ```
-index.html          Home: hero, affiliations, "what we do" cards
-research.html       Mission, 4 focus areas, PI bio
-team.html           PI card + 6 member placeholder cards
-publications.html   Reverse-chronological list grouped by year
-news.html           3 dated news entries
-contact.html        Contact info, contact form, open positions
+index.html          Home: tagline, affiliations, six section cards
+research.html       Mission, 4 focus areas, PI bio and headshot
+team.html           PI, lab alumni with current positions, collaborators
+publications.html   10 selected papers + all 92 (generated from the CV)
+participate.html    For families: what studies involve, privacy, contact-list form
+news.html           Dated news items
+funding.html        Current and recent grants (footer + Research link, not in nav)
+contact.html        Contact info, message form, how to join the lab
 css/styles.css      All styles; brand colors at the top in :root
-js/main.js          Mobile nav, footer year, contact form validation
+js/main.js          Mobile nav, footer year, form validation for both forms
 assets/img/         logo-horizontal.webp (header), logo-square.webp (footer),
                     logo-mark.svg (favicon), photo placeholders
 assets/img/brand/   Full-resolution logo PNGs (print, slides, social)
-tests/check_site.py Static checks (links, alt text, nav, labels, contrast)
+tests/check_site.py Static checks (links, alt text, nav, labels, contrast, pubs)
+tools/update_publications.py   Rebuilds the publication list from the CV
+tools/doi_cache.json           Crossref DOI matches (keeps reruns fast and stable)
 ```
 
 ## Preview locally
@@ -30,6 +34,14 @@ python3 -m http.server 8000
 ```
 
 Then visit http://localhost:8000.
+
+## Update publications from your CV
+
+```bash
+python3 tools/update_publications.py ~/Library/CloudStorage/Dropbox/CV_Resume_mostUptoDate/Hanson_CV_YYYYMMDD.docx
+```
+
+Reads the "Peer-Reviewed Journal Articles", "Book Chapters", and "Journal Commentaries" sections (skips "Manuscripts Under Review"), fills missing DOIs from Crossref (only title matches of 90% or better, never preprint-server DOIs), and rewrites only the block between `<!-- PUBS:START -->` and `<!-- PUBS:END -->` in `publications.html`. To change the selected papers or their group labels, edit `SELECTED` at the top of the script. DOIs checked by hand live in `DOI_OVERRIDES`. The script prints any article still missing a link.
 
 ## Check before publishing
 
@@ -49,33 +61,13 @@ Fails on: broken local links or anchors, images without `alt`, pages without exa
 **Vercel or Netlify**
 Import the repo, choose "Other" / no framework, leave the build command empty, output directory `.`.
 
-## Replace the placeholders
-
-Every spot is marked with an HTML/CSS comment containing `PLACEHOLDER`. List them all with:
-
-```bash
-grep -rn PLACEHOLDER --include=*.html --include=*.css --include=*.svg .
-```
-
-Visible placeholder text is in `[square brackets]`.
+## What still needs you
 
 | What | Where |
 |---|---|
-| Lab email (`your-email@mcw.edu`) | Footer of all 6 pages, and 2 places in `contact.html` |
-| Building / address | Footer of all 6 pages, and `contact.html` |
-| One-line mission | `index.html` hero, `research.html` mission block |
-| "What we do" summary | `index.html` |
-| Expanded mission (2 paragraphs) | `research.html` |
-| 4 focus areas (heading + paragraph each) | `research.html`. Delete a card if you only want 2 or 3. |
-| PI bio, degree ("PhD"), CV link | `research.html`; degree also on `team.html` |
-| PI headshot | `research.html` and `team.html`: point `src` at e.g. `assets/img/hanson.jpg` and update `alt` |
-| Lab group photo | `index.html` hero |
-| 6 lab member cards (photo, name, role, bio) | `team.html`. Copy/delete `<article class="card person-card">` blocks to change the count. |
-| Publications (authors, title, journal, DOI, PDF) | `publications.html`. Add a new `<section class="pub-year">` per year. |
-| Google Scholar / PubMed links | `publications.html` note box |
-| 3 news items | `news.html`. Update both the `datetime` attribute and the visible date. |
-| Recruiting blurb and 3 open positions | `contact.html` |
-| Contact form handler | `js/main.js` `FORM_ENDPOINT`, and `action=""` on the form in `contact.html` (see below) |
+| Lab group photo | `index.html` hero (the only `PLACEHOLDER` left). Swap `src` and `alt`. |
+| Form handler | Both forms are front end only. See "Wiring the forms" below. |
+| Payment wording on Participate | `participate.html`, marked `CONFIRM`. It says studies "often include payment"; confirm before launch. |
 
 ### Brand colors and logo
 
@@ -91,13 +83,15 @@ Colors are sampled from the TaLE MKE logo and live at the top of `css/styles.css
 
 The header and footer background must stay exactly `#0074c8` so the logo images blend in. If the logo is ever re-exported in another color, change `--color-primary` to match. The favicon and placeholder SVGs use the same hex values. Logo blue on white is 4.85:1 (passes AA); logo blue on pale blue does not, so text on pale-blue surfaces uses `--color-primary-dark`. `tests/check_site.py` enforces this.
 
-### Wiring the contact form
+### Wiring the forms
 
-The form is front end only. It validates input and, until connected, tells the visitor to email instead. To receive messages with Formspree:
+Two forms, both front end only: the message form on `contact.html` and the families contact list on `participate.html`. Each validates input and, until connected, tells the visitor to email instead. Each sends a hidden `_form` field (`contact` or `participant-interest`) so one endpoint can take both. To receive submissions with Formspree:
 
 1. Create a form at https://formspree.io and copy the endpoint (`https://formspree.io/f/xxxxxxx`).
 2. Paste it into `FORM_ENDPOINT` near the top of the form section in `js/main.js`.
-3. Paste the same URL into `action=""` on `<form id="contact-form">` in `contact.html`.
+3. Paste the same URL into `action=""` on both forms (used when JavaScript is off).
+
+The Participate form collects names, emails, phone numbers, and children's ages from families. Check with MCW/Children's Wisconsin research compliance about where that data may be stored before connecting it; they may require an institutional tool such as REDCap instead of a third-party form service.
 
 ### Photos
 
@@ -105,4 +99,4 @@ Use JPG or WebP. Suggested sizes: headshots square, 600x600 or larger; lab photo
 
 ### Editing the shared header and footer
 
-The header and footer are repeated in each of the 6 HTML files (no build step). When you change one, change all six. `tests/check_site.py` catches nav drift.
+The header and footer are repeated in each of the 8 HTML files (no build step). When you change one, change all eight. `tests/check_site.py` catches nav drift.

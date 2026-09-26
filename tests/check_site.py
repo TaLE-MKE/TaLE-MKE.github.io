@@ -10,7 +10,9 @@ from html.parser import HTMLParser
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PAGES = ["index.html", "research.html", "team.html", "publications.html", "news.html", "contact.html"]
+NAV_PAGES = ["index.html", "research.html", "team.html", "publications.html", "participate.html", "news.html", "contact.html"]
+# funding.html is linked from the footer and Research page, not the main nav.
+PAGES = NAV_PAGES + ["funding.html"]
 failures = []
 
 
@@ -65,7 +67,7 @@ class Page(HTMLParser):
                 self.srcs.append(ref)
         elif tag == "label" and "for" in a:
             self.labels_for.add(a["for"])
-        elif tag in ("input", "textarea"):
+        elif tag in ("input", "textarea") and a.get("type") != "hidden":
             self.inputs.append(a.get("id"))
 
     def handle_endtag(self, tag):
@@ -117,8 +119,9 @@ for name in PAGES:
     for img in p.imgs:
         if "alt" not in img:
             fail(f"{name}: <img src={img.get('src')}> has no alt attribute")
-    if p.current != [name]:
-        fail(f"{name}: nav aria-current should mark only {name}, got {p.current}")
+    expected = [name] if name in NAV_PAGES else []
+    if p.current != expected:
+        fail(f"{name}: nav aria-current should be {expected}, got {p.current}")
     for ref in p.srcs + p.links:
         if is_local(ref):
             target = ROOT / ref.split("#")[0]
@@ -143,8 +146,8 @@ for name in PAGES:
 navs = {n: tuple(p.nav_links) for n, p in parsed.items()}
 if len(set(navs.values())) != 1:
     fail(f"nav differs across pages: {navs}")
-elif list(navs.values())[0] != tuple(PAGES):
-    fail(f"nav order {list(navs.values())[0]} != {PAGES}")
+elif list(navs.values())[0] != tuple(NAV_PAGES):
+    fail(f"nav order {list(navs.values())[0]} != {NAV_PAGES}")
 
 # Late-bound anchor check (pages parsed after the linking page).
 for name, p in parsed.items():
@@ -171,6 +174,37 @@ for name in parsed:
         fail(f"{name}: header is missing the horizontal logo")
     if "logo-square.webp" not in foot:
         fail(f"{name}: footer is missing the square logo")
+
+# Publications: generated block present, 10 selected papers, every article linked.
+pubs = (ROOT / "publications.html").read_text()
+if "<!-- PUBS:START -->" not in pubs or "<!-- PUBS:END -->" not in pubs:
+    fail("publications.html: PUBS markers missing")
+else:
+    block = pubs.split("<!-- PUBS:START -->", 1)[1].split("<!-- PUBS:END -->", 1)[0]
+    selected = block.split('<details', 1)[0].count('<li class="pub">')
+    if selected != 10:
+        fail(f"publications.html: expected 10 selected papers, found {selected}")
+    full = block.split('<details', 1)[1] if '<details' in block else ""
+    articles = full.split('id="y-chapters"', 1)[0]
+    unlinked = [e for e in articles.split('<li class="pub">')[1:] if "pub-links" not in e]
+    if unlinked:
+        fail(f"publications.html: {len(unlinked)} articles have no DOI or preprint link")
+    print(f"Publications: {selected} selected, {full.count('<li class=\"pub\">')} in full list")
+
+# Contact details are real, not placeholders.
+for name in PAGES:
+    text = (ROOT / name).read_text()
+    if "your-email@" in text or "[Building" in text:
+        fail(f"{name}: placeholder email or address left in")
+
+# Every js-form field that is required has an error slot.
+for name in PAGES:
+    text = (ROOT / name).read_text()
+    for m in re.finditer(r'<(?:input|textarea)[^>]*\brequired\b[^>]*>', text):
+        tag = m.group(0)
+        fid = re.search(r'id="([^"]+)"', tag)
+        if fid and f'id="{fid.group(1)}-error"' not in text:
+            fail(f"{name}: required field #{fid.group(1)} has no error message element")
 
 # ---- color contrast (WCAG AA 4.5:1 for normal text) ----
 css = (ROOT / "css/styles.css").read_text()
