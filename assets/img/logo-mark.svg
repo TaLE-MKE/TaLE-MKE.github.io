@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40">
+  <!-- PLACEHOLDER: simple wordmark icon. Replace with a designed lab logo if you have one. -->
+  <rect width="40" height="40" rx="11" fill="#00594f"/>
+  <g fill="none" stroke-linecap="round" stroke-width="2.6">
+    <path d="M8 30 C16 29 18 18 25 17 S31 11 33 9" stroke="#ffffff"/>
+    <path d="M8 33 C17 32 20 24 27 23 S31 20 33 19" stroke="#7fc3f5"/>
+  </g>
+  <circle cx="25" cy="17" r="2.6" fill="#f2b544"/>
+</svg>

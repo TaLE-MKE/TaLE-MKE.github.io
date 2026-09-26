@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+  <!-- PLACEHOLDER: replace with a real lab photo (4:3, at least 1200x900 px). -->
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e3f1ee"/>
+      <stop offset="1" stop-color="#e6f1fa"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#g)"/>
+  <g fill="none" stroke-width="6" stroke-linecap="round">
+    <path d="M40 470 C220 460 300 300 460 290 S700 170 760 120" stroke="#00594f" opacity=".55"/>
+    <path d="M40 510 C240 500 330 380 500 360 S700 280 760 250" stroke="#0067b9" opacity=".45"/>
+    <path d="M40 430 C200 420 260 250 420 220 S660 110 760 70" stroke="#f2b544" opacity=".7"/>
+  </g>
+  <g fill="#fff" stroke="#b9d8d2" stroke-width="3">
+    <circle cx="220" cy="455" r="10"/><circle cx="460" cy="290" r="10"/><circle cx="660" cy="190" r="10"/>
+  </g>
+  <text x="400" y="560" text-anchor="middle" font-family="Arial, sans-serif" font-size="26" font-weight="700" fill="#00594f">Photo placeholder: lab group photo</text>
+</svg>
