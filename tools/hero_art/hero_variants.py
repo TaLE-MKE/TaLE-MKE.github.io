@@ -168,8 +168,8 @@ def v5():
     return svg(body, defs, note="Option 5, Depth map: cortical depth isolines like an MRI map, sulci in green.")
 
 
-# The home page rotates options 1, 2 and 4. Options 3 and 5 stay here in case you want them.
-ROTATION = [("hero-brain-1.svg", v1), ("hero-brain-2.svg", v2), ("hero-brain-3.svg", v4)]
+# The home page rotates options 1 and 4. Options 2, 3 and 5 stay here in case you want them.
+ROTATION = [("hero-brain-1.svg", v1), ("hero-brain-2.svg", v4)]
 
 if __name__ == "__main__":
     for name, fn in ROTATION:

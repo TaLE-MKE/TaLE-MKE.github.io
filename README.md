@@ -18,13 +18,14 @@ contact.html        Contact info, message form, how to join the lab
 css/styles.css      All styles; brand colors at the top in :root
 js/main.js          Mobile nav, footer year, contact form validation
 assets/img/         logo-horizontal.webp (header), logo-square.webp (footer),
-                    logo-mark.svg (favicon), hero-brain-1..3.svg + logo-horizontal-transparent.webp
+                    logo-mark.svg (favicon), hero-brain-1/2.svg + logo-horizontal-transparent.webp
                     (home hero rotation), hanson-portrait/square.webp (headshots)
 assets/img/brand/   Full-resolution logo PNGs, on blue and transparent (print, slides, posters)
 tests/check_site.py Static checks (links, alt text, nav, labels, contrast, pubs)
 tools/update_publications.py   Rebuilds the publication list from the CV
 tools/doi_cache.json           Crossref DOI matches (keeps reruns fast and stable)
 tools/stamp_assets.py          Cache-busting ?v= stamps on CSS/JS links (run before pushing)
+tools/add_people_photos.py     Adds photos from photos-inbox/ to People page cards
 tools/hero_art/                Scripts that build the hero art from the MNI152 template
 ```
 
@@ -75,7 +76,7 @@ To use a custom domain later (e.g. a lab domain), add it under repo Settings > P
 
 | What | Where |
 |---|---|
-| Home hero image | `index.html` crossfades three brain illustrations (`hero-brain-1..3.svg`, 6s each, pause button, still for reduced-motion users) under the transparent logo. The brain comes from the MNI152 template; see `tools/hero_art/README.md` to rebuild or restyle. To use a lab group photo instead, replace the `<figure class="hero-art">` with one `<img>` (4:3, 1200x900 or larger) and write its `alt`. |
+| Home hero image | `index.html` crossfades two brain illustrations (`hero-brain-1.svg`, `hero-brain-2.svg`, 6s each, pause button, still for reduced-motion users) under the transparent logo. The brain comes from the MNI152 template; see `tools/hero_art/README.md` to rebuild or restyle. To use a lab group photo instead, replace the `<figure class="hero-art">` with one `<img>` (4:3, 1200x900 or larger) and write its `alt`. |
 | Form handler | The contact form is front end only. See "Wiring the contact form" below. |
 | Payment wording on Participate | `participate.html`, marked `CONFIRM`. It says studies "often include payment"; confirm before launch. |
 
@@ -102,6 +103,14 @@ The message form on `contact.html` is front end only. It validates input and, un
 3. Paste the same URL into `action=""` on `<form id="contact-form">` in `contact.html`.
 
 The validation code handles any `<form class="js-form">`, so a family sign-up form can be added to `participate.html` later without new JavaScript. Before collecting families' contact details, check with MCW/Children's Wisconsin research compliance about where that data may be stored (they may require REDCap).
+
+### People photos
+
+1. Save photos in `photos-inbox/` (create it if needed; it is never published) named after the person exactly as on the People page, e.g. `Kelly Barry.jpg`. Accents are optional. JPG, PNG, WebP and iPhone HEIC all work.
+2. Run `python3 tools/add_people_photos.py`. Each photo is square-cropped (centered, favoring the top of the frame), resized to 320x320, saved to `assets/img/people/` with EXIF/GPS metadata removed, and swapped into that person's card in place of the initials.
+3. Check the People page, then publish as usual.
+
+The script lists anyone still showing initials and any photo whose name matched no one. Ask people before posting their photo.
 
 ### Photos
 
