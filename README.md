@@ -18,8 +18,9 @@ contact.html        Contact info, message form, how to join the lab
 css/styles.css      All styles; brand colors at the top in :root
 js/main.js          Mobile nav, footer year, contact form validation
 assets/img/         logo-horizontal.webp (header), logo-square.webp (footer),
-                    logo-mark.svg (favicon), photo placeholders
-assets/img/brand/   Full-resolution logo PNGs (print, slides, social)
+                    logo-mark.svg (favicon), hero-brain.svg + logo-horizontal-transparent.webp
+                    (home hero art), hanson-portrait/square.webp (headshots)
+assets/img/brand/   Full-resolution logo PNGs, on blue and transparent (print, slides, posters)
 tests/check_site.py Static checks (links, alt text, nav, labels, contrast, pubs)
 tools/update_publications.py   Rebuilds the publication list from the CV
 tools/doi_cache.json           Crossref DOI matches (keeps reruns fast and stable)
@@ -70,7 +71,7 @@ To use a custom domain later (e.g. a lab domain), add it under repo Settings > P
 
 | What | Where |
 |---|---|
-| Lab group photo | `index.html` hero (the only `PLACEHOLDER` left). Swap `src` and `alt`. |
+| Home hero image | `index.html` uses mockup art: a brain illustration (`hero-brain.svg`) with the transparent logo layered on top. To use a lab group photo instead, replace the `<figure class="hero-art">` with one `<img>` (4:3, 1200x900 or larger) and write its `alt`. |
 | Form handler | The contact form is front end only. See "Wiring the contact form" below. |
 | Payment wording on Participate | `participate.html`, marked `CONFIRM`. It says studies "often include payment"; confirm before launch. |
 

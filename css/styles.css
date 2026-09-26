@@ -300,7 +300,7 @@ a:hover { color: var(--color-secondary-dark); text-decoration-thickness: 2px; }
 .hero .btn-secondary { background: transparent; color: #fff; border-color: #fff; }
 .hero .btn-secondary:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
 .hero :focus-visible { outline-color: #fff; }
-.hero-media img {
+.hero-media > img {
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-hover);
   aspect-ratio: 4 / 3;
@@ -850,3 +850,22 @@ address { font-style: normal; }
 /* Footer extras */
 .site-footer address { line-height: 1.5; }
 .footer-links { display: flex !important; flex-wrap: wrap; gap: 6px 20px !important; }
+
+/* Home hero art: brain illustration with the transparent logo layered on top. */
+.hero-art {
+  position: relative;
+  margin: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35), var(--shadow-hover);
+}
+.hero-art img:first-child { width: 100%; height: auto; aspect-ratio: 4 / 3; display: block; }
+.hero-art-logo {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  width: 78%;
+  height: auto;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 2px 8px rgba(0, 40, 80, 0.35));
+}
