@@ -51,15 +51,20 @@ python3 tests/check_site.py
 
 Fails on: broken local links or anchors, images without `alt`, pages without exactly one `<h1>`, nav that differs across pages, form fields without labels, external assets other than Google Fonts, em dashes, and any brand color pair below WCAG AA (4.5:1). It also prints how many `PLACEHOLDER` markers remain. Rerun it after changing colors.
 
-## Deploy
+## Live site and publishing updates
 
-**GitHub Pages**
-1. Create a repo on GitHub and push this folder to `main`.
-2. Repo Settings > Pages > Source: "Deploy from a branch", branch `main`, folder `/ (root)`.
-3. The site appears at `https://<user>.github.io/<repo>/` within a minute or two.
+- Live: https://tale-mke.github.io/
+- Repo: https://github.com/TaLE-MKE/TaLE-MKE.github.io (GitHub Pages, branch `main`, folder `/`)
 
-**Vercel or Netlify**
-Import the repo, choose "Other" / no framework, leave the build command empty, output directory `.`.
+To publish a change: edit, check, commit, push. GitHub rebuilds in about a minute.
+
+```bash
+python3 tests/check_site.py && git add -A && git commit -m "Describe the change" && git push
+```
+
+Commits in this repo use the GitHub noreply address (`git config user.email`), so no personal email shows in the public history. `.nojekyll` tells GitHub to serve the files as they are.
+
+To use a custom domain later (e.g. a lab domain), add it under repo Settings > Pages > Custom domain and create the DNS record GitHub shows you.
 
 ## What still needs you
 
