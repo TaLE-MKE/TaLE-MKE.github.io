@@ -851,15 +851,65 @@ address { font-style: normal; }
 .site-footer address { line-height: 1.5; }
 .footer-links { display: flex !important; flex-wrap: wrap; gap: 6px 20px !important; }
 
-/* Home hero art: brain illustration with the transparent logo layered on top. */
+/* Home hero art: three illustrations crossfade under the transparent logo.
+   18s cycle, 6s per image with a 1s crossfade. The first image stays in flow to size the box. */
 .hero-art {
   position: relative;
   margin: 0;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  background: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35), var(--shadow-hover);
 }
-.hero-art img:first-child { width: 100%; height: auto; aspect-ratio: 4 / 3; display: block; }
+.hero-slide {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  opacity: 0;
+  animation: hero-fade 18s linear infinite;
+}
+.hero-slide + .hero-slide { position: absolute; inset: 0; }
+.hero-slide:nth-of-type(1) { animation-delay: -1s; }
+.hero-slide:nth-of-type(2) { animation-delay: 5s; }
+.hero-slide:nth-of-type(3) { animation-delay: 11s; }
+@keyframes hero-fade {
+  0% { opacity: 0; }
+  5.56% { opacity: 1; }   /* 1s fade in */
+  33.33% { opacity: 1; }  /* hold to 6s */
+  38.89% { opacity: 0; }  /* 1s fade out */
+  100% { opacity: 0; }
+}
+.hero-art.is-paused .hero-slide { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide { animation: none; }
+  .hero-slide:nth-of-type(1) { opacity: 1; }
+  .hero-art-toggle { display: none; }
+}
+
+.hero-art-toggle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  background: rgba(0, 79, 138, 0.55);
+  color: #fff;
+  cursor: pointer;
+}
+.hero-art-toggle:hover { background: rgba(0, 79, 138, 0.85); }
+.icon-pause { width: 10px; height: 12px; border-left: 3px solid currentColor; border-right: 3px solid currentColor; }
+.hero-art.is-paused .icon-pause {
+  width: 0; height: 0;
+  border-style: solid;
+  border-width: 7px 0 7px 11px;
+  border-color: transparent transparent transparent currentColor;
+  margin-left: 3px;
+}
 .hero-art-logo {
   position: absolute;
   left: 50%;

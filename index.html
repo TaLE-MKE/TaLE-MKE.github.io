@@ -70,12 +70,17 @@
           </div>
         </div>
         <div class="hero-media">
-          <!-- Mockup hero art: brain illustration with the TaLE MKE logo layered on top.
+          <!-- Hero art: three brain illustrations crossfade under the logo (see tools/hero_art/).
                To use a lab group photo instead, replace this <figure> with a single <img>. -->
           <figure class="hero-art">
-            <img src="assets/img/hero-brain.svg" width="800" height="600"
-                 alt="Illustration of a brain in the TaLE MKE colors, with the lab logo in front">
+            <img class="hero-slide" src="assets/img/hero-brain-1.svg" width="800" height="600"
+                 alt="Illustrations of a brain from an MRI template in the TaLE MKE colors, rotating between flowing trajectory lines, a network of connections, and brains growing along a trajectory">
+            <img class="hero-slide" src="assets/img/hero-brain-2.svg" width="800" height="600" alt="">
+            <img class="hero-slide" src="assets/img/hero-brain-3.svg" width="800" height="600" alt="">
             <img class="hero-art-logo" src="assets/img/logo-horizontal-transparent.webp" width="720" height="268" alt="">
+            <button class="hero-art-toggle" type="button" aria-pressed="false" aria-label="Pause the rotating images">
+              <span class="icon-pause" aria-hidden="true"></span>
+            </button>
           </figure>
         </div>
       </div>

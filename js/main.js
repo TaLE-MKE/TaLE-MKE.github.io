@@ -32,6 +32,17 @@
     });
   }
 
+  /* ---------- Home hero rotation: pause / play ---------- */
+  var heroToggle = document.querySelector(".hero-art-toggle");
+  if (heroToggle) {
+    heroToggle.addEventListener("click", function () {
+      var art = heroToggle.closest(".hero-art");
+      var paused = art.classList.toggle("is-paused");
+      heroToggle.setAttribute("aria-pressed", String(paused));
+      heroToggle.setAttribute("aria-label", paused ? "Play the rotating images" : "Pause the rotating images");
+    });
+  }
+
   /* ---------- Footer year ---------- */
   var year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
