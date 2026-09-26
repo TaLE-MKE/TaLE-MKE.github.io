@@ -37,7 +37,7 @@
   if (year) year.textContent = String(new Date().getFullYear());
 
   /* ---------- Forms (front end only) ----------
-     Applies to every <form class="js-form"> (Contact and Participate).
+     Applies to every <form class="js-form"> (currently the Contact form).
      ======================================================================
      WIRE IN A FORM HANDLER HERE
      This site has no backend. To receive submissions, sign up for a form
@@ -46,7 +46,7 @@
        var FORM_ENDPOINT = "https://formspree.io/f/abcdwxyz";
      Also set the same URL in each <form action="..."> so the forms still
      submit if JavaScript is off. Each form sends a hidden "_form" field
-     ("contact" or "participant-interest") so you can tell them apart.
+     (e.g. "contact") so one endpoint can serve more than one form.
      While FORM_ENDPOINT is empty, the forms validate input and show a
      notice, but nothing is sent anywhere.
      ====================================================================== */

@@ -66,8 +66,8 @@
         <h2 id="who-title">Who we work with</h2>
         <p>We work with children, teens, and their families in the Milwaukee area. Every family's story
         is different, and we want to hear from all kinds of families.</p>
-        <p>TaLE MKE is just getting started in Milwaukee. Join our contact list below and we will reach out
-        when a study is a good fit for your family. Joining the list does not sign you up for anything.</p>
+        <p>TaLE MKE is just getting started in Milwaukee. If you would like to hear about our studies,
+        email us and we will be in touch when a study is a good fit for your family.</p>
       </div>
     </section>
 
@@ -110,7 +110,7 @@
     </section>
 
     <section class="section" aria-labelledby="choice-title">
-      <div class="container two-col">
+      <div class="container prose-wide">
         <div>
           <span class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3 5 6v6c0 4.5 3 7.5 7 9 4-1.5 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/></svg></span>
           <h2 id="choice-title">Your choice, your privacy</h2>
@@ -122,53 +122,12 @@
             <li>Studies often include payment for your time. We tell you the details for each study.</li>
           </ul>
         </div>
-
-        <div class="card form-card">
-          <h2 id="list-title">Join our contact list</h2>
-          <p class="form-intro">Leave your details and we will contact you about studies that fit your family.</p>
-          <!--
-            FRONT END ONLY. Nothing is sent until a form handler is connected.
-            See FORM_ENDPOINT in js/main.js. Use a handler that stores data securely;
-            this form asks for contact details only, not health information.
-          -->
-          <form class="js-form" action="" method="POST" novalidate aria-labelledby="list-title">
-            <input type="hidden" name="_form" value="participant-interest">
-            <div class="field">
-              <label for="p-name">Parent or guardian name</label>
-              <input id="p-name" name="name" type="text" autocomplete="name" required
-                     data-error="Please enter your name." aria-describedby="p-name-error">
-              <p class="field-error" id="p-name-error" aria-live="polite"></p>
-            </div>
-            <div class="field">
-              <label for="p-email">Email</label>
-              <input id="p-email" name="email" type="email" autocomplete="email" required
-                     data-error="Please enter a valid email address, like name@example.com." aria-describedby="p-email-error">
-              <p class="field-error" id="p-email-error" aria-live="polite"></p>
-            </div>
-            <div class="field">
-              <label for="p-phone">Phone <span class="hint">(optional)</span></label>
-              <input id="p-phone" name="phone" type="tel" autocomplete="tel">
-            </div>
-            <div class="field">
-              <label for="p-ages">Ages of your children <span class="hint">(optional)</span></label>
-              <input id="p-ages" name="child_ages" type="text" placeholder="For example: 8 and 13">
-            </div>
-            <div class="field field-check">
-              <input id="p-consent" name="consent" type="checkbox" value="yes" required
-                     data-error="Please check this box so we can contact you." aria-describedby="p-consent-error">
-              <label for="p-consent">It's OK to contact me about TaLE MKE studies. I understand this does not sign me up for a study.</label>
-              <p class="field-error" id="p-consent-error" aria-live="polite"></p>
-            </div>
-            <button class="btn btn-primary" type="submit">Join the list</button>
-            <p class="form-status" role="status" aria-live="polite"></p>
-          </form>
-        </div>
       </div>
     </section>
 
     <section class="section section-tint" aria-labelledby="q-title">
       <div class="container">
-        <h2 id="q-title">Questions?</h2>
+        <h2 id="q-title">Interested, or have questions?</h2>
         <p>Email us at <a href="mailto:jamhanson@mcw.edu">jamhanson@mcw.edu</a>. We are happy to talk before you decide anything.</p>
       </div>
     </section>

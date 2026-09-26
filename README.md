@@ -11,12 +11,12 @@ index.html          Home: tagline, affiliations, six section cards
 research.html       Mission, 4 focus areas, PI bio and headshot
 team.html           PI, lab alumni with current positions, collaborators
 publications.html   10 selected papers + all 92 (generated from the CV)
-participate.html    For families: what studies involve, privacy, contact-list form
+participate.html    For families: what studies involve, privacy, how to reach us
 news.html           Dated news items
 funding.html        Current and recent grants (footer + Research link, not in nav)
 contact.html        Contact info, message form, how to join the lab
 css/styles.css      All styles; brand colors at the top in :root
-js/main.js          Mobile nav, footer year, form validation for both forms
+js/main.js          Mobile nav, footer year, contact form validation
 assets/img/         logo-horizontal.webp (header), logo-square.webp (footer),
                     logo-mark.svg (favicon), photo placeholders
 assets/img/brand/   Full-resolution logo PNGs (print, slides, social)
@@ -66,7 +66,7 @@ Import the repo, choose "Other" / no framework, leave the build command empty, o
 | What | Where |
 |---|---|
 | Lab group photo | `index.html` hero (the only `PLACEHOLDER` left). Swap `src` and `alt`. |
-| Form handler | Both forms are front end only. See "Wiring the forms" below. |
+| Form handler | The contact form is front end only. See "Wiring the contact form" below. |
 | Payment wording on Participate | `participate.html`, marked `CONFIRM`. It says studies "often include payment"; confirm before launch. |
 
 ### Brand colors and logo
@@ -83,15 +83,15 @@ Colors are sampled from the TaLE MKE logo and live at the top of `css/styles.css
 
 The header and footer background must stay exactly `#0074c8` so the logo images blend in. If the logo is ever re-exported in another color, change `--color-primary` to match. The favicon and placeholder SVGs use the same hex values. Logo blue on white is 4.85:1 (passes AA); logo blue on pale blue does not, so text on pale-blue surfaces uses `--color-primary-dark`. `tests/check_site.py` enforces this.
 
-### Wiring the forms
+### Wiring the contact form
 
-Two forms, both front end only: the message form on `contact.html` and the families contact list on `participate.html`. Each validates input and, until connected, tells the visitor to email instead. Each sends a hidden `_form` field (`contact` or `participant-interest`) so one endpoint can take both. To receive submissions with Formspree:
+The message form on `contact.html` is front end only. It validates input and, until connected, tells the visitor to email instead. To receive messages with Formspree:
 
 1. Create a form at https://formspree.io and copy the endpoint (`https://formspree.io/f/xxxxxxx`).
 2. Paste it into `FORM_ENDPOINT` near the top of the form section in `js/main.js`.
-3. Paste the same URL into `action=""` on both forms (used when JavaScript is off).
+3. Paste the same URL into `action=""` on `<form id="contact-form">` in `contact.html`.
 
-The Participate form collects names, emails, phone numbers, and children's ages from families. Check with MCW/Children's Wisconsin research compliance about where that data may be stored before connecting it; they may require an institutional tool such as REDCap instead of a third-party form service.
+The validation code handles any `<form class="js-form">`, so a family sign-up form can be added to `participate.html` later without new JavaScript. Before collecting families' contact details, check with MCW/Children's Wisconsin research compliance about where that data may be stored (they may require REDCap).
 
 ### Photos
 
