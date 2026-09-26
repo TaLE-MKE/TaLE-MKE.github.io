@@ -24,6 +24,7 @@ assets/img/brand/   Full-resolution logo PNGs, on blue and transparent (print, s
 tests/check_site.py Static checks (links, alt text, nav, labels, contrast, pubs)
 tools/update_publications.py   Rebuilds the publication list from the CV
 tools/doi_cache.json           Crossref DOI matches (keeps reruns fast and stable)
+tools/stamp_assets.py          Cache-busting ?v= stamps on CSS/JS links (run before pushing)
 tools/hero_art/                Scripts that build the hero art from the MNI152 template
 ```
 
@@ -61,8 +62,10 @@ Fails on: broken local links or anchors, images without `alt`, pages without exa
 To publish a change: edit, check, commit, push. GitHub rebuilds in about a minute.
 
 ```bash
-python3 tests/check_site.py && git add -A && git commit -m "Describe the change" && git push
+python3 tools/stamp_assets.py && python3 tests/check_site.py && git add -A && git commit -m "Describe the change" && git push
 ```
+
+`tools/stamp_assets.py` adds a content hash to the CSS and JS links (`styles.css?v=...`). GitHub Pages lets browsers cache files for 10 minutes; the stamp makes browsers fetch a changed stylesheet or script right away instead of pairing new HTML with an old cached file. The check script fails if a stamp is stale.
 
 Commits in this repo use the GitHub noreply address (`git config user.email`), so no personal email shows in the public history. `.nojekyll` tells GitHub to serve the files as they are.
 

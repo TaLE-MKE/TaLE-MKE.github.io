@@ -124,7 +124,7 @@ for name in PAGES:
         fail(f"{name}: nav aria-current should be {expected}, got {p.current}")
     for ref in p.srcs + p.links:
         if is_local(ref):
-            target = ROOT / ref.split("#")[0]
+            target = ROOT / ref.split("#")[0].split("?")[0]
             if not target.exists():
                 fail(f"{name}: broken local reference {ref}")
         if ref.startswith("http") and "fonts.g" not in ref and "formspree" not in ref:
@@ -205,6 +205,15 @@ for name in PAGES:
         fid = re.search(r'id="([^"]+)"', tag)
         if fid and f'id="{fid.group(1)}-error"' not in text:
             fail(f"{name}: required field #{fid.group(1)} has no error message element")
+
+# CSS/JS links carry a current content hash, so browsers never pair new HTML with a cached old file.
+import hashlib
+for asset in ("css/styles.css", "js/main.js"):
+    want = hashlib.sha256((ROOT / asset).read_bytes()).hexdigest()[:10]
+    for name in PAGES:
+        text = (ROOT / name).read_text()
+        if f"{asset}?v={want}" not in text:
+            fail(f"{name}: {asset} link is missing or has a stale ?v= stamp (run python3 tools/stamp_assets.py)")
 
 # ---- color contrast (WCAG AA 4.5:1 for normal text) ----
 css = (ROOT / "css/styles.css").read_text()
